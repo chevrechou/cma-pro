@@ -37,3 +37,7 @@ $$;
 create trigger cma_reports_updated_at
   before update on public.cma_reports
   for each row execute function public.handle_updated_at();
+
+-- Indexes for common query patterns
+create index if not exists cma_reports_agent_id_idx on public.cma_reports(agent_id);
+create index if not exists cma_reports_created_at_idx on public.cma_reports(created_at desc);

@@ -8,6 +8,7 @@ export default function Register() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [brokerage, setBrokerage] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -15,6 +16,19 @@ export default function Register() {
   async function handleRegister() {
     if (!fullName || !email || !password) {
       setError('Please fill in all required fields.');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
       return;
     }
     setLoading(true);
@@ -50,7 +64,8 @@ export default function Register() {
         <YStack gap="$3">
           <Input placeholder="Full Name *" value={fullName} onChangeText={setFullName} size="$5" bg="white" />
           <Input placeholder="Email *" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" size="$5" bg="white" />
-          <Input placeholder="Password *" value={password} onChangeText={setPassword} secureTextEntry size="$5" bg="white" />
+          <Input placeholder="Password * (min 8 characters)" value={password} onChangeText={setPassword} secureTextEntry size="$5" bg="white" />
+          <Input placeholder="Confirm Password *" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry size="$5" bg="white" />
           <Input placeholder="Brokerage (optional)" value={brokerage} onChangeText={setBrokerage} size="$5" bg="white" />
         </YStack>
 

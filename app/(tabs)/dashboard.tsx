@@ -5,19 +5,25 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, TouchableOpacity } from 'react-native';
-import { Button, Card, Separator, Spinner, Text, XStack, YStack } from 'tamagui';
+import { Button, Card, Separator, Spinner, Text, View, XStack, YStack } from 'tamagui';
 
 export default function Dashboard() {
   const [reports, setReports] = useState<CMAReport[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [fetchError, setFetchError] = useState('');
 
   const fetchReports = useCallback(async () => {
     const { data, error } = await supabase
       .from('cma_reports')
       .select('*')
       .order('created_at', { ascending: false });
-    if (!error && data) setReports(data as CMAReport[]);
+    if (error) {
+      setFetchError(error.message);
+    } else {
+      setFetchError('');
+      setReports(data as CMAReport[]);
+    }
     setLoading(false);
     setRefreshing(false);
   }, []);
@@ -50,9 +56,15 @@ export default function Dashboard() {
         </Button>
       </XStack>
 
+      {fetchError ? (
+        <View bg="$red2" mx="$4" mt="$3" br="$3" p="$3">
+          <Text color="$red10" fontSize={13}>{fetchError}</Text>
+        </View>
+      ) : null}
+
       <FlatList
         data={reports}
-        keyExtractor={(item) => item.id ?? item.created_at ?? Math.random().toString()}
+        keyExtractor={(item) => item.id ?? item.created_at ?? item.subject?.address ?? ''}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); fetchReports(); }} />
         }

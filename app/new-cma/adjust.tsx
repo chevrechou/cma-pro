@@ -11,6 +11,18 @@ export default function AdjustScreen() {
   const { comps, updateCompAdjustment } = useNewCMAStore();
   const included = comps.filter((c) => c.included);
 
+  if (included.length === 0) {
+    return (
+      <YStack flex={1} jc="center" ai="center" bg="#F4F6F8" gap="$4" px="$5">
+        <Ionicons name="home-outline" size={48} color="#CBD5E0" />
+        <Text color="#7F8C8D" fontSize={16} ta="center">No comparables selected.{'\n'}Go back and include at least one comp.</Text>
+        <Button size="$5" bg="#1B4F72" color="white" onPress={() => router.back()}>
+          Back to Comps
+        </Button>
+      </YStack>
+    );
+  }
+
   const [editing, setEditing] = useState<Comparable | null>(null);
   const [adjAmount, setAdjAmount] = useState('');
   const [adjNotes, setAdjNotes] = useState('');

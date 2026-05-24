@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Input, Separator, Spinner, Text, XStack, YStack } from 'tamagui';
 
 export default function Settings() {
@@ -12,6 +12,7 @@ export default function Settings() {
   const [licenseNumber, setLicenseNumber] = useState('');
   const [phone, setPhone] = useState('');
   const [rapidApiKey, setRapidApiKey] = useState('');
+  const [showApiKey, setShowApiKey] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -87,14 +88,20 @@ export default function Settings() {
           <Separator />
           <YStack gap="$1">
             <Text fontSize={12} color="#7F8C8D" fontWeight="600">RapidAPI Key (Zillow)</Text>
-            <Input
-              value={rapidApiKey}
-              onChangeText={setRapidApiKey}
-              placeholder="Your RapidAPI key"
-              secureTextEntry
-              size="$4"
-              bg="#F4F6F8"
-            />
+            <XStack ai="center" gap="$2">
+              <Input
+                flex={1}
+                value={rapidApiKey}
+                onChangeText={setRapidApiKey}
+                placeholder="Your RapidAPI key"
+                secureTextEntry={!showApiKey}
+                size="$4"
+                bg="#F4F6F8"
+              />
+              <TouchableOpacity onPress={() => setShowApiKey((v) => !v)}>
+                <Ionicons name={showApiKey ? 'eye-off-outline' : 'eye-outline'} size={20} color="#7F8C8D" />
+              </TouchableOpacity>
+            </XStack>
             <Text fontSize={11} color="#7F8C8D">
               Subscribe to Zillow Com1 on RapidAPI to fetch comparable sales.
             </Text>

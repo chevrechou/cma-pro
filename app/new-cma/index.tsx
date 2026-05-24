@@ -45,8 +45,17 @@ export default function SubjectPropertyForm() {
 
   function validate() {
     if (!address || !city || !state || !zip) return 'Please enter the full address.';
+    if (!/^\d{5}$/.test(zip)) return 'ZIP code must be exactly 5 digits.';
     if (!beds || !baths || !sqft) return 'Beds, baths, and sqft are required.';
-    if (isNaN(Number(beds)) || isNaN(Number(baths)) || isNaN(Number(sqft))) return 'Beds, baths, and sqft must be numbers.';
+    const bedsN = Number(beds), bathsN = Number(baths), sqftN = Number(sqft);
+    if (isNaN(bedsN) || isNaN(bathsN) || isNaN(sqftN)) return 'Beds, baths, and sqft must be numbers.';
+    if (bedsN <= 0 || bathsN <= 0) return 'Beds and baths must be greater than 0.';
+    if (sqftN <= 0) return 'Square footage must be greater than 0.';
+    if (yearBuilt) {
+      const yr = Number(yearBuilt);
+      if (isNaN(yr) || yr < 1800 || yr > new Date().getFullYear() + 1) return 'Year built must be between 1800 and next year.';
+    }
+    if (garage && (isNaN(Number(garage)) || Number(garage) < 0)) return 'Garage spaces must be 0 or more.';
     return '';
   }
 

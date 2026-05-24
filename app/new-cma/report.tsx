@@ -3,7 +3,7 @@ import { useNewCMAStore } from '@/lib/store';
 import { supabase } from '@/lib/supabase';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { Button, Card, Separator, Spinner, Text, XStack, YStack } from 'tamagui';
 
@@ -22,8 +22,23 @@ export default function ReportScreen() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const mountedRef = useRef(true);
 
-  if (!subject) return null;
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; };
+  }, []);
+
+  if (!subject) {
+    return (
+      <YStack flex={1} jc="center" ai="center" bg="#F4F6F8" gap="$4">
+        <Text color="#7F8C8D">No subject property found.</Text>
+        <Button onPress={() => router.replace('/new-cma')} size="$4" bg="#1B4F72" color="white">
+          Start Over
+        </Button>
+      </YStack>
+    );
+  }
 
   const included = comps.filter((c) => c.included);
   const stats = calcMarketStats(included);
@@ -33,9 +48,11 @@ export default function ReportScreen() {
     setSaving(true);
     setError('');
     try {
-      const { data: user } = await supabase.auth.getUser();
+      const { data: userData } = await supabase.auth.getUser();
+      const agentId = userData.user?.id;
+      if (!agentId) throw new Error('Not authenticated. Please sign in again.');
       const { error: err } = await supabase.from('cma_reports').insert({
-        agent_id: user.user?.id,
+        agent_id: agentId,
         subject,
         comps,
         market_stats: stats,
@@ -46,15 +63,16 @@ export default function ReportScreen() {
         client_email: clientEmail || null,
       });
       if (err) throw err;
-      setSaved(true);
+      if (mountedRef.current) setSaved(true);
       setTimeout(() => {
+        if (!mountedRef.current) return;
         reset();
         router.replace('/(tabs)/dashboard');
       }, 1500);
     } catch (e: any) {
-      setError(e.message ?? 'Failed to save report.');
+      if (mountedRef.current) setError(e.message ?? 'Failed to save report.');
     }
-    setSaving(false);
+    if (mountedRef.current) setSaving(false);
   }
 
   return (

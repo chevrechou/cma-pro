@@ -5,13 +5,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, ScrollView, TouchableOpacity } from 'react-native';
-import { Button, Card, Separator, Spinner, Text, XStack, YStack } from 'tamagui';
+import { Button, Card, Separator, Spinner, Text, View, XStack, YStack } from 'tamagui';
 
 export default function CMADetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [report, setReport] = useState<CMAReport | null>(null);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   useEffect(() => {
     supabase
@@ -33,8 +34,13 @@ export default function CMADetail() {
         style: 'destructive',
         onPress: async () => {
           setDeleting(true);
-          await supabase.from('cma_reports').delete().eq('id', id);
-          router.replace('/(tabs)/dashboard');
+          const { error } = await supabase.from('cma_reports').delete().eq('id', id);
+          if (error) {
+            setDeleting(false);
+            setDeleteError(error.message);
+          } else {
+            router.replace('/(tabs)/dashboard');
+          }
         },
       },
     ]);
@@ -76,6 +82,12 @@ export default function CMADetail() {
           <Ionicons name="trash-outline" size={22} color="#E74C3C" />
         </TouchableOpacity>
       </XStack>
+
+      {deleteError ? (
+        <View bg="$red2" mx="$4" mt="$3" br="$3" p="$3">
+          <Text color="$red10" fontSize={13}>{deleteError}</Text>
+        </View>
+      ) : null}
 
       <ScrollView contentContainerStyle={{ padding: 16, gap: 14, paddingBottom: 40 }}>
         <Card bg="#1B4F72" br="$5" p="$5" ai="center" gap="$2">

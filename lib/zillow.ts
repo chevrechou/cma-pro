@@ -45,7 +45,7 @@ export async function searchComparables(
     const salePrice = p.price ?? p.soldPrice ?? 0;
     const sqftVal = p.livingArea ?? 1;
     return {
-      id: p.zpid ?? String(Math.random()),
+      id: p.zpid ?? `${(p.address ?? '').replace(/\s+/g, '-').toLowerCase()}-${p.zipcode ?? zip}`,
       address: p.address ?? '',
       city: p.city ?? '',
       state: p.state ?? '',
