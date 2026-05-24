@@ -5,9 +5,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Card, Separator, Spinner, Text, View, XStack, YStack } from 'tamagui';
 
 export default function CMADetail() {
+  const { top: topInset } = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [report, setReport] = useState<CMAReport | null>(null);
   const [loading, setLoading] = useState(true);
@@ -67,7 +69,7 @@ export default function CMADetail() {
 
   return (
     <YStack flex={1} bg="#F4F6F8">
-      <XStack bg="#1B4F72" pt="$12" pb="$4" px="$5" jc="space-between" ai="center">
+      <XStack bg="#1B4F72" pt={topInset + 16} pb="$4" px="$5" jc="space-between" ai="center">
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>

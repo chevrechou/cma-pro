@@ -5,9 +5,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { FlatList, Modal, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Card, Input, Separator, Text, XStack, YStack } from 'tamagui';
 
 export default function AdjustScreen() {
+  const { bottom: bottomInset } = useSafeAreaInsets();
   const { comps, updateCompAdjustment } = useNewCMAStore();
   const included = comps.filter((c) => c.included);
 
@@ -112,7 +114,8 @@ export default function AdjustScreen() {
         left={0}
         right={0}
         px="$4"
-        py="$3"
+        pt="$3"
+        pb={Math.max(bottomInset, 12)}
         bg="white"
         borderTopWidth={1}
         borderTopColor="#E8E8E8"

@@ -7,9 +7,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Card, Separator, Spinner, Text, XStack, YStack, View } from 'tamagui';
 
 export default function CompsScreen() {
+  const { bottom: bottomInset } = useSafeAreaInsets();
   const { subject, comps, setComps, toggleComp } = useNewCMAStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -95,7 +97,8 @@ export default function CompsScreen() {
           left={0}
           right={0}
           px="$4"
-          py="$3"
+          pt="$3"
+          pb={Math.max(bottomInset, 12)}
           bg="white"
           borderTopWidth={1}
           borderTopColor="#E8E8E8"

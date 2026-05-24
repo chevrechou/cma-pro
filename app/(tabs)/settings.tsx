@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Input, Separator, Spinner, Text, XStack, YStack } from 'tamagui';
 
 export default function Settings() {
@@ -44,11 +45,13 @@ export default function Settings() {
     router.replace('/(auth)/login');
   }
 
+  const { top: topInset } = useSafeAreaInsets();
+
   if (!agent) return <YStack flex={1} jc="center" ai="center"><Spinner color="#1B4F72" /></YStack>;
 
   return (
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#F4F6F8' }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <YStack bg="#1B4F72" pt="$12" pb="$5" px="$5">
+      <YStack bg="#1B4F72" pt={topInset + 16} pb="$5" px="$5">
         <Text color="white" fontSize={22} fontWeight="800">Settings</Text>
         <Text color="rgba(255,255,255,0.7)" fontSize={13}>{agent?.email}</Text>
       </YStack>

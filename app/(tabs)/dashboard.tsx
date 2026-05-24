@@ -5,9 +5,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Card, Separator, Spinner, Text, View, XStack, YStack } from 'tamagui';
 
 export default function Dashboard() {
+  const { top: topInset } = useSafeAreaInsets();
   const [reports, setReports] = useState<CMAReport[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -40,7 +42,7 @@ export default function Dashboard() {
 
   return (
     <YStack flex={1} bg="#F4F6F8">
-      <XStack bg="#1B4F72" pt="$12" pb="$4" px="$5" jc="space-between" ai="center">
+      <XStack bg="#1B4F72" pt={topInset + 16} pb="$4" px="$5" jc="space-between" ai="center">
         <YStack>
           <Text color="white" fontSize={22} fontWeight="800">CMA Pro</Text>
           <Text color="rgba(255,255,255,0.7)" fontSize={13}>Market Analysis Reports</Text>
