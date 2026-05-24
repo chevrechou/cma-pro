@@ -11,6 +11,13 @@
         "simulator": true
       }
     },
+    "testflight": {
+      "distribution": "store",
+      "autoIncrement": true,
+      "ios": {
+        "resourceClass": "m-medium"
+      }
+    },
     "preview": {
       "distribution": "internal",
       "ios": {
@@ -28,6 +35,13 @@
     }
   },
   "submit": {
+    "testflight": {
+      "ios": {
+        "appleId": "michaelchang@alumni.usc.edu",
+        "ascAppId": "",
+        "appleTeamId": ""
+      }
+    },
     "production": {
       "ios": {
         "appleId": "michaelchang@alumni.usc.edu",

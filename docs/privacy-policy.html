@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — CMA Pro</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #F4F6F8;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+    nav {
+      background: #1B4F72;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { color: white; font-weight: 800; font-size: 18px; text-decoration: none; }
+    .nav-logo span { color: #D4AC0D; }
+    nav a.back { color: rgba(255,255,255,0.7); font-size: 14px; text-decoration: none; }
+    nav a.back:hover { color: white; }
+    .container { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+    h1 { font-size: 36px; font-weight: 900; color: #1B4F72; letter-spacing: -1px; margin-bottom: 8px; }
+    .updated { color: #7F8C8D; font-size: 14px; margin-bottom: 48px; }
+    h2 { font-size: 20px; font-weight: 800; color: #1B4F72; margin: 40px 0 12px; }
+    p { color: #333; margin-bottom: 16px; font-size: 15px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+    th { text-align: left; padding: 10px 14px; background: #1B4F72; color: white; font-weight: 700; }
+    td { padding: 10px 14px; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #f9f9f9; }
+    footer { text-align: center; padding: 32px 24px; color: #7F8C8D; font-size: 13px; background: #1B4F72; color: rgba(255,255,255,0.4); }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">CMA <span>Pro</span></a>
+  <a href="index.html" class="back">← Back to home</a>
+</nav>
+<div class="container">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: May 24, 2026</p>
+
+  <p>This privacy policy describes how CMA Pro ("the app", "we") handles information when you use the iOS application.</p>
+
+  <h2>What We Collect</h2>
+  <p><strong>Account Information.</strong> When you create an account, we collect your email address and a hashed password via Supabase Auth. We never store or transmit your plaintext password.</p>
+  <p><strong>Agent Profile (Optional).</strong> You may optionally enter your full name, brokerage name, license number, phone number, and RapidAPI key. These are stored in your Supabase user profile and used only within the app.</p>
+  <p><strong>CMA Reports.</strong> Reports you create — including subject property details, comparable sales data, market statistics, suggested prices, and optional client name/email — are stored in your account and are only accessible by you.</p>
+
+  <h2>What We Do Not Collect</h2>
+  <p>We do not collect device identifiers, advertising IDs, or location data. We do not track your behavior across other apps or websites. We do not sell any data to third parties.</p>
+
+  <h2>How Your Data Is Used</h2>
+  <table>
+    <thead><tr><th>Data</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Email + password</td><td>Authentication only</td></tr>
+      <tr><td>Agent profile</td><td>Displayed within the app; not shared</td></tr>
+      <tr><td>RapidAPI key</td><td>Sent to RapidAPI on your behalf to fetch comparable sales</td></tr>
+      <tr><td>CMA reports</td><td>Stored in your account; accessible only by you</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Third-Party Services</h2>
+  <p><strong>Supabase</strong> — Your account data and CMA reports are stored in Supabase's hosted PostgreSQL database. Data is encrypted at rest and in transit. <a href="https://supabase.com/privacy">supabase.com/privacy</a></p>
+  <p><strong>RapidAPI / Zillow Com1</strong> — When you search for comparable sales, your RapidAPI key and search parameters (ZIP code, bedrooms, bathrooms, square footage) are sent to RapidAPI. No personally identifiable information is included in these requests. <a href="https://rapidapi.com/privacy">rapidapi.com/privacy</a></p>
+
+  <h2>Data Retention</h2>
+  <p>Your data is retained as long as your account exists. To delete your account and all associated data, contact us at the email below. We will process deletion requests within 30 days.</p>
+
+  <h2>Security</h2>
+  <p>All data is transmitted over HTTPS. Passwords are hashed via Supabase Auth. Your RapidAPI key is stored in your Supabase user profile and only transmitted to RapidAPI over HTTPS.</p>
+
+  <h2>Children</h2>
+  <p>CMA Pro is intended for real estate professionals. We do not knowingly collect information from anyone under 18.</p>
+
+  <h2>Changes</h2>
+  <p>If we make material changes to this policy, we will update the date at the top. Continued use of the app after changes take effect constitutes acceptance.</p>
+
+  <h2>Contact</h2>
+  <p>
+    Email: <a href="mailto:michaelchang@alumni.usc.edu">michaelchang@alumni.usc.edu</a><br>
+    GitHub: <a href="https://github.com/chevrechou/cma-pro">github.com/chevrechou/cma-pro</a>
+  </p>
+</div>
+<footer>© 2026 CMA Pro</footer>
+</body>
+</html>
