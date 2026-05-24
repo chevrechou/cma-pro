@@ -20,6 +20,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": "cmapro",
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "react-native-reanimated"
+    ]
   }
 }
